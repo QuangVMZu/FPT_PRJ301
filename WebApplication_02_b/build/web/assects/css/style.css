@@ -1,0 +1,119 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(to right, #74ebd5, #ACB6E5);
+    padding: 40px;
+    margin: 0;
+}
+
+/* Hộp form chính */
+.form-container {
+    background-color: #ffffff;
+    padding: 30px;
+    max-width: 600px;
+    margin: auto;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    border-left: 8px solid #00bcd4;
+    transition: transform 0.3s ease;
+}
+
+.form-container:hover {
+    transform: scale(1.01);
+}
+
+h1 {
+    text-align: center;
+    color: #006064;
+    margin-bottom: 25px;
+}
+
+/* Label và các input cơ bản */
+label {
+    display: block;
+    margin-top: 15px;
+    font-weight: bold;
+    color: #333;
+}
+
+input[type="text"],
+input[type="password"],
+textarea,
+select {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 2px solid #b2ebf2;
+    border-radius: 8px;
+    font-size: 14px;
+    background-color: #e0f7fa;
+    transition: border-color 0.3s;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+    outline: none;
+    border-color: #00acc1;
+}
+
+/* Fieldset */
+fieldset {
+    border: 2px solid #b2dfdb;
+    padding: 15px;
+    margin-top: 20px;
+    border-radius: 10px;
+    background-color: #e0f2f1;
+}
+
+legend {
+    font-weight: bold;
+    color: #00796b;
+}
+
+textarea {
+    resize: none; /* không cho resize */
+    height: 100px; /* chiều cao cố định */
+    max-width: 100%; /* không vượt chiều rộng form */
+}
+
+/* Nhóm nút */
+.button-group {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-top: 25px;
+    gap: 10px;
+}
+
+.button-group input {
+    flex: 1 1 45%;
+    padding: 12px;
+    font-size: 14px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: #00bcd4;
+    color: white;
+    transition: background-color 0.3s ease, transform 0.2s;
+}
+
+.button-group input:hover {
+    background-color: #0097a7;
+    transform: translateY(-2px);
+}
+
+.button-group input[type="reset"] {
+    background-color: #f44336;
+}
+
+.button-group input[type="reset"]:hover {
+    background-color: #d32f2f;
+}
+
+.button-group input[type="button"] {
+    background-color: #4caf50;
+}
+
+.button-group input[type="button"]:hover {
+    background-color: #388e3c;
+}

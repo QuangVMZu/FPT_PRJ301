@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="vi">
+    <head>
+        <meta charset="UTF-8">
+        <title>HTML Forms</title>
+        <link rel="stylesheet" href="assects/css/style.css"> <!-- Kết nối CSS -->
+    </head>
+    <body>
+        <div class="form-container">
+            <h1>HTML Forms</h1>
+            <form action="index.html" method="post">
+                <label>Textbox:
+                    <input type="text" name="txtText" size="5">
+                </label><br>
+
+                <label>Password:
+                    <input type="password" name="txtPassword">
+                </label><br>
+
+                <input type="hidden" name="txtHidden" value="">
+
+                <fieldset>
+                    <legend>Gender:</legend>
+                    <label><input type="radio" name="gender" value="male"> Male</label><br>
+                    <label><input type="radio" name="gender" value="female"> Female</label>
+                </fieldset>
+
+                <fieldset>
+                    <legend>Status:</legend>
+                    <label><input type="radio" name="rdoStatus" value="Single" checked> Single</label><br>
+                    <label><input type="radio" name="rdoStatus" value="Married"> Married</label><br>
+                    <label><input type="radio" name="rdoStatus" value="Divorced"> Divorced</label> <!-- sửa lỗi "Divorsed" -->
+                </fieldset>
+
+                <label>ComboBox:
+                    <select name="txtCombo">
+                        <option value="Servlet">JSP and Servlet</option>
+                        <option value="EJB">EJB</option>
+                    </select>
+                </label><br>
+
+                <label>Multiple:
+                    <select name="txtList" multiple size="3">
+                        <option value="Servlet" selected>JSP and Servlet</option>
+                        <option value="EJB" selected>EJB</option>
+                        <option value="Java">Core Java</option>
+                    </select>
+                </label><br>
+
+                <label>TextArea:
+                    <textarea name="txtArea" rows="4" cols="20" maxlength="200"></textarea>
+                </label><br>
+
+                <div class="button-group">
+                    <input type="submit" name="txtB" value="Submit">
+                    <input type="submit" value="Register" name="action">
+                    <input type="reset" name="txtE" value="Reset">
+                    <input type="button" value="JavaScript" name="txtB" onclick="alert('Button clicked!')">
+                </div>
+            </form>
+        </div>
+    </body>
+</html>
