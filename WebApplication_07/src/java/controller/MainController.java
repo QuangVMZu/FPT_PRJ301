@@ -1,3 +1,4 @@
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
@@ -29,7 +30,7 @@ public class MainController extends HttpServlet {
     }
 
     private boolean isProductAction(String action) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "addProduct".equals(action);
     }
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
@@ -47,6 +48,7 @@ public class MainController extends HttpServlet {
         } finally {
             request.getRequestDispatcher(url).forward(request, response);
         }
+        //
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
