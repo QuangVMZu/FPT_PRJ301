@@ -237,8 +237,7 @@
     </head>
     <body>
         <div class="container">
-            <% if (AuthUtils.isAdmin(request)){
-            
+            <%
             String checkError = (String)request.getAttribute("checkError");
             String message = (String)request.getAttribute("message");
             ProductDTO product  = (ProductDTO)request.getAttribute("product");
@@ -313,19 +312,6 @@
                 <div class="success-message"><%=message%></div>
                 <% } %>
             </div>
-
-            <%
-        }else {
-            %>
-            <div class="header">
-                <h1>ACCESS DENIED</h1>
-            </div>
-            <div class="access-denied">
-                <%=AuthUtils.getAccessDeniedMessage("Product Home")%> 
-            </div>
-            <%
-        }
-            %>
         </div>
     </body>
 </html>

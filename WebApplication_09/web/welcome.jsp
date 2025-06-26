@@ -27,7 +27,6 @@
                 box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             }
 
-            /* Header Styles */
             h1 {
                 color: #333;
                 margin-bottom: 10px;
@@ -79,7 +78,6 @@
                 background-color: #b71c1c;
             }
 
-            /* Search Form Styles */
             .search-section {
                 margin: 25px 0;
                 padding: 20px;
@@ -131,7 +129,6 @@
                 background-color: #0056b3;
             }
 
-            /* Message Styles */
             .no-results {
                 text-align: center;
                 padding: 30px;
@@ -143,7 +140,6 @@
                 margin: 20px 0;
             }
 
-            /* Table Styles */
             .table-container {
                 margin-top: 25px;
                 overflow-x: auto;
@@ -189,7 +185,6 @@
                 cursor: pointer;
             }
 
-            /* Status styling */
             .status-true {
                 color: #28a745;
                 font-weight: bold;
@@ -200,13 +195,11 @@
                 font-weight: bold;
             }
 
-            /* Price styling */
             .price {
                 font-weight: bold;
                 color: #007bff;
             }
 
-            /* Action buttons */
             .action-buttons {
                 display: flex;
                 gap: 5px;
@@ -245,7 +238,6 @@
                 background-color: #c82333;
             }
 
-            /* Responsive Design */
             @media screen and (max-width: 768px) {
                 .container {
                     padding: 15px;
@@ -283,15 +275,14 @@
     </head>
     <body>
         <%
-          if(AuthUtils.isLoggedIn(request)){
-             UserDTO user = AuthUtils.getCurrentUser(request);
-             String keyword = (String) request.getAttribute("keyword");
+            UserDTO user = AuthUtils.getCurrentUser(request);
+            String keyword = (String) request.getAttribute("keyword");
+            String checkError = (String) request.getAttribute("checkError");
         %>
         <div class="container">
             <div class="header-section">
                 <h1>Welcome <%= user.getFullName() %>!</h1>
                 <div class="header-actions">
-
                     <a href="MainController?action=logout" class="logout-btn">Logout</a>
                 </div>
             </div>
@@ -301,91 +292,87 @@
                     <form action="MainController" method="post" class="search-form">
                         <input type="hidden" name="action" value="searchProduct"/>
                         <label class="search-label">Search product by name:</label>
-                        <input type="text" name="keyword" value="<%=keyword!=null?keyword:""%>" 
+                        <input type="text" name="keyword" value="<%= keyword != null ? keyword : "" %>" 
                                class="search-input" placeholder="Enter product name..."/>
                         <input type="submit" value="Search" class="search-btn"/>
                     </form>
                 </div>
+
                 <% if(AuthUtils.isAdmin(request)){ %>
                 <a href="productsHome.jsp" class="add-product-btn">Add Product</a>
                 <% } %>
+
                 <%
-                    List<ProductDTO> list = (List<ProductDTO>)request.getAttribute("list");
-                    if(list!=null && list.isEmpty()){
+                    List<ProductDTO> list = (List<ProductDTO>) request.getAttribute("list");
+                    if (list == null || list.isEmpty()) {
                 %>
                 <div class="no-results">
                     <h3>No products found</h3>
                     <p>No products have name matching with the keyword.</p>
                 </div>
                 <%
-                    }else if(list!=null && !list.isEmpty()){
+                    } else if (list != null && !list.isEmpty()) {
                 %>
-                <table class="products-table">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Image</th>
-                            <th>Description</th>
-                            <th>Price</th>
-                            <th>Size</th>
-                            <th>Status</th>
+                <div class="table-container">
+                    <table class="products-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Image</th>
+                                <th>Description</th>
+                                <th>Price</th>
+                                <th>Size</th>
+                                <th>Status</th>
+                                    <% if(AuthUtils.isAdmin(request)){ %>
+                                <th>Action</th>
+                                    <% } %>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% for(ProductDTO p : list) { %>
+                            <tr>
+                                <td><%= p.getId() %></td>
+                                <td><%= p.getName() %></td>
+                                <td>
+                                    <img src="<%= p.getImage() %>" alt="Product Image" width="60" height="60"/>
+                                </td>
+                                <td><%= p.getDescription() %></td>
+                                <td class="product-price">$<%= String.format("%.2f", p.getPrice()) %></td>
+                                <td><%= p.getSize() %></td>
+                                <td>
+                                    <span class="<%= p.isStatus() ? "status-true" : "status-false" %>">
+                                        <%= p.isStatus() ? "Active" : "Inactive" %>
+                                    </span>
+                                </td>
                                 <% if(AuthUtils.isAdmin(request)){ %>
-                            <th>Action</th>
-                                <%}%>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <% for(ProductDTO p: list) { %>
-                        <tr>
-                            <td data-label="ID" class="product-id"><%=p.getId()%></td>
-                            <td data-label="Name" class="product-name"><%=p.getName()%></td>
-                            <td data-label="Image"><%=p.getImage()%></td>
-                            <td data-label="Description"><%=p.getDescription()%></td>
-                            <td data-label="Price" class="product-price">$<%=p.getPrice()%></td>
-                            <td data-label="Size"><%=p.getSize()%></td>
-                            <td data-label="Status">
-                                <span class="product-status <%=p.isStatus() ? "status-active" : "status-inactive"%>">
-                                    <%=p.isStatus() ? "Active" : "Inactive"%>
-                                </span>
-                            </td>
-                            <% if(AuthUtils.isAdmin(request)){ %>
-                            <td data-label="Action">
-                                <div class="action-buttons">
-                                    <!-- <a href="MainController?action=editProduct&productId=<%=p.getId()%>" class="edit-btn">Edit</a>-->
-                                    <form action="MainController" method="post" style="display: inline;">
-                                        <input type="hidden" name="action" value="editProduct"/>
-                                        <input type="hidden" name="productId" value="<%=p.getId()%>"/>
-                                        <input type="hidden" name="keyword" value="<%=keyword!=null?keyword:""%>" />
-                                        <input type="submit" value="Edit" class="edit-btn" />
-                                    </form>
-                                    <form action="MainController" method="post" style="display: inline;">
-                                        <input type="hidden" name="action" value="changeProductStatus"/>
-                                        <input type="hidden" name="productId" value="<%=p.getId()%>"/>
-                                        <input type="hidden" name="keyword" value="<%=keyword!=null?keyword:""%>" />
-                                        <input type="submit" value="Delete" class="delete-btn" 
-                                               onclick="return confirm('Are you sure you want to delete this product?')"/>
-                                    </form>
-                                </div>
-                            </td>
+                                <td>
+                                    <div class="action-buttons">
+                                        <form action="MainController" method="post" style="display:inline;">
+                                            <input type="hidden" name="action" value="editProduct"/>
+                                            <input type="hidden" name="productId" value="<%= p.getId() %>"/>
+                                            <input type="hidden" name="keyword" value="<%= keyword != null ? keyword : "" %>"/>
+                                            <input type="submit" value="Edit" class="edit-btn"/>
+                                        </form>
+                                        <form action="MainController" method="post" style="display:inline;">
+                                            <input type="hidden" name="action" value="changeProductStatus"/>
+                                            <input type="hidden" name="productId" value="<%= p.getId() %>"/>
+                                            <input type="hidden" name="keyword" value="<%= keyword != null ? keyword : "" %>"/>
+                                            <input type="submit" value="Delete" class="delete-btn"
+                                                   onclick="return confirm('Are you sure you want to delete this product?')"/>
+                                        </form>
+                                    </div>
+                                </td>
+                                <% } %>
+                            </tr>
                             <% } %>
-                        </tr>
-                        <% } %>
-                    </tbody>
-                </table>
-                <%
-                    }
-                %>
-            </div>
-        </div>
-        <%} else { %>
-        <div class="container">
-            <div class="access-denied">
-                <h2>Access Denied</h2>
-                <p><%=AuthUtils.getAccessDeniedMessage("welcome.jsp")%></p>
-                <a href="<%=AuthUtils.getLoginURL()%>" class="login-link">Login Now</a>
-            </div>
-        </div>
-        <%}%>
+                        </tbody>
+                    </table>
+                </div>
+                <% } else if (checkError != null && !checkError.isEmpty()) { %>
+                <div class="no-results"><%= checkError %></div>
+                <% } %>
+            </div> <!-- .content -->
+        </div> <!-- .container -->
     </body>
 </html>
